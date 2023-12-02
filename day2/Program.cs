@@ -86,17 +86,46 @@ foreach (KeyValuePair<string, int> kvp in details)
     Console.WriteLine($"{kvp.Key}   {kvp.Value}");
 }*/
 
+Dictionary<string, int> getMaxColourInGame(string game)
+{
+    string[] game_sets = getSets(game);
+
+    Dictionary<string, int> max = new Dictionary<string, int>
+    {
+        { "red", 0 },
+        { "green", 0 },
+        { "blue", 0 }
+    };
+
+    foreach (string set in game_sets)
+    {
+        Dictionary<string, int> set_data = getSetDetails(set);
+
+        if (max["red"] < set_data["red"]) max["red"] = set_data["red"];
+        if (max["green"] < set_data["green"]) max["green"] = set_data["green"];
+        if (max["blue"] < set_data["blue"]) max["blue"] = set_data["blue"];
+    }
+
+    return max;
+}
+
 
 
 int sum = 0;
 foreach (string line in lines)
 {
     int game_id = getGameID(line);
-    
-    if (isValidGame(line))
+
+    /*if (isValidGame(line))
     {
         sum += game_id;
-    }
+    }*/
+
+    Dictionary<string, int> max = getMaxColourInGame(line);
+
+    int power = max["red"] * max["green"] * max["blue"];
+
+    sum += power;
 }
 
 Console.WriteLine(sum);
