@@ -1,6 +1,6 @@
 ﻿string[] lines = File.ReadAllLines(@"../../../input.txt");
-int LINE_LENGTH = 140;
-int LINE_HEIGHT = 140;
+int LINE_LENGTH = lines[0].Length;
+int LINE_HEIGHT = lines.Length;
 
 char get2dpos(int x, int y)
 {
@@ -68,6 +68,7 @@ bool isConnected(int x, int y)
     return false;
 }
 
+
 int total_sum = 0;
 for (int y = 0; y < lines.Length; y++)
 {
@@ -84,17 +85,16 @@ for (int y = 0; y < lines.Length; y++)
             start_x = -1;
             counted = false;
         }
-        else if (char.IsDigit(current) && !counted)
+        else if (char.IsDigit(current))
         {
             if (start_x == -1) start_x = x;
 
-            if (isConnected(x, y))
+            if (isConnected(x, y) && !counted)
             {
                 int full_number = getFullNumber(start_x, y);
                 Console.WriteLine(full_number);
                 total_sum += full_number;
                 counted = true;
-                start_x = -1;
             }
 
         }
