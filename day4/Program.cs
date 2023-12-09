@@ -35,8 +35,11 @@ int getNumberOfSharedNumbers(List<int> a, List<int> b)
 }
 
 
-int sum = 0;
+//int sum = 0;
 
+List<int> vs = Enumerable.Repeat(1, lines.Length).ToList();
+
+int index = 0;
 foreach (string line in lines)
 {
     string numbers = line.Split(':')[1];
@@ -51,7 +54,17 @@ foreach (string line in lines)
 
     int count = getNumberOfSharedNumbers(winning_nums, card_nums);
 
-    sum += (int)Math.Pow(2, count - 1);
+    for (int x = 0; x < vs[index]; x++) {
+        for (int i = 0; i < count; i++)
+        {
+            vs[index + 1 + i]++;
+        }
+    }
+
+   // Console.WriteLine(count);
+    //sum += (int)Math.Pow(2, count - 1);
+
+    index++;
 }
 
-Console.WriteLine(sum);
+Console.WriteLine(Enumerable.Sum(vs));
